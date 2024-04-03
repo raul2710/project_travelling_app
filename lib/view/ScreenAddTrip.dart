@@ -5,13 +5,13 @@ import 'package:project_travelling_shop/model/User.dart';
 
 import '../model/Trip.dart';
 
-class ScreenModifyItem extends StatefulWidget {
-  const ScreenModifyItem({super.key});
+class ScreenAddTrip extends StatefulWidget {
+  const ScreenAddTrip({super.key});
 
   @override
-  State<ScreenModifyItem> createState() => _ScreenModifyItemState();
+  State<ScreenAddTrip> createState() => _ScreenAddTripState();
 }
-class _ScreenModifyItemState extends State<ScreenModifyItem> {
+class _ScreenAddTripState extends State<ScreenAddTrip> {
   
   // Chave para o formulario
   var formKey = GlobalKey<FormState>();
@@ -105,13 +105,10 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                       ),
                     ),
                     SizedBox(height: boxSeparateHeight,),
-                    // 
-                    // Input travel name
-                    // 
                     TextFormField(
                       controller: txtTravelName,
                       
-                      decoration: txtDecorationLoginAndSubscribe('Travel title'),
+                      decoration: txtDecorationLoginAndSubscribe('Full name'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Type your full name';
@@ -122,27 +119,24 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                   
                     SizedBox(height: boxSeparateHeight,),
                     // 
-                    // Input id
+                    // Password content text
                     // 
                     TextFormField(
-                      controller: txtId,
-
-                      decoration: txtDecorationLoginAndSubscribe('Id trip'),
+                      controller: txtDescription,
+                      decoration: txtDecorationLoginAndSubscribe('Email'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type an id trip';
+                          return 'Type an email';
                         }
                         return null;
                       }
                     ),
                     SizedBox(height: boxSeparateHeight,),
-                    // 
-                    // Input price
-                    // 
+
                     TextFormField(
-                      controller: txtPlace,
-                      
-                      decoration: txtDecorationLoginAndSubscribe('Place'),
+                      controller: txtDescription,
+                      obscureText: true,
+                      decoration: txtDecorationLoginAndSubscribe('Password'),
                       validator: (value){
                         if (value!.isEmpty) {
                           return 'Type a password';
@@ -152,24 +146,9 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                     ),
                     SizedBox(height: boxSeparateHeight,),
                     TextFormField(
-                      controller: txtPrice,
-                      
-                      decoration: txtDecorationLoginAndSubscribe('Price'),
-                      validator: (value){
-                        if (value!.isEmpty) {
-                          return 'Type your password';
-                        }
-                        return null;
-                      }
-                    ),
-                    SizedBox(height: boxSeparateHeight,),
-                    // 
-                    // Input description
-                    // 
-                    TextFormField(
                       controller: txtDescription,
-                      
-                      decoration: txtDecorationLoginAndSubscribe('Description'),
+                      obscureText: true,
+                      decoration: txtDecorationLoginAndSubscribe('Consfirm your password'),
                       validator: (value){
                         if (value!.isEmpty) {
                           return 'Type your password';
@@ -181,8 +160,53 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                       }
                     ),
                     // 
+                    // Remember me checkBox
+                    // 
+                    CheckboxListTile(
+                      title: Text('Remember me'),
+                      value: _checked,
+                      onChanged:(bool? value) {
+                        _checked = true;
+                      },
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      controlAffinity: ListTileControlAffinity.leading,                  
+                    ),
+                    // 
                     // Button Login
                     // 
+                    SizedBox(
+                      width: double.infinity, // <-- match_parent
+                      
+                      child: OutlinedButton(
+                      // style: flatButtonStyle,
+                      
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(6)),
+                          )  
+                        ),           
+                        onPressed: (){
+                          if (formKey.currentState!.validate()) {
+                            setState(() {
+                              var v1 = txtDescription.text;
+                              var v2 = txtDescription.text;
+                              // var msg = 'Tudo certo por enquanto \n email: $v1 \n Senha: $v2';
+                            });
+              
+                          } else {
+                            // Erro na validação
+                          }
+                        },
+                        child: Text(
+                          'Subscribe',
+                          style: TextStyle(
+                            fontSize: 36,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),               
                     //
                     // Google and facebook buttons
                     // 
@@ -191,50 +215,39 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                       children: [                   
                         ElevatedButton(
                           onPressed:(){
+                            // Captura os dados modificados para salvar ou adicionar na lista
+                            int id = int.parse(txtId.text);
+                            String travelName = txtTravelName.text;
+                            String place = txtPlace.text;
+                            double price = double.parse(txtPrice.text);
+                            String description = txtDescription.text;
 
-                            if (formKey.currentState!.validate()) {
-                              setState(() {
-                                var v1 = txtDescription.text;
-                                var v2 = txtDescription.text;
-
-                                // Captura os dados modificados para salvar ou adicionar na lista
-                                int id = int.parse(txtId.text);
-                                String travelName = txtTravelName.text;
-                                String place = txtPlace.text;
-                                double price = double.parse(txtPrice.text);
-                                String description = txtDescription.text;
-
-                                final trip = Trip(id, travelName, place, price, description);
-
-                                lista.add(trip);
-
-                                Navigator.pushNamed(context, 'screenListTravels');
-                              });
-                
-                            } else {
-                              // Erro na validação
-                            }
+                            final trip = Trip(id, travelName, place, price, description);
                             
+                            lista.add(trip);
                           }, /*saveChanges()*/
                           child: Text(
                             'Save',
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              setState(() {
-                                var v1 = txtDescription.text;
-                                var v2 = txtDescription.text;
-                                Navigator.pushNamed(context, 'screenListTravels');
-                              });
-                            } else {
-                              // Erro na validação
-                            }
+                          onPressed: (){
+                            Navigator.pushNamed(context, 'screenListTravels');
                           },
                           child: Text(
                             'Back',
                           ),
+                        ),
+                        IconButton(
+                          onPressed: (){
+                            Navigator.pushNamed(context, 'https://www.facebook.com/?locale=pt_BR');
+                          }, 
+                          icon: Image.asset('lib/images/icons/facebook_logo.png'),
+                          iconSize: 50,
+                        ),
+                        OutlinedButton(
+                          onPressed: () {Navigator.pushNamed(context, 'screenLogin');}, 
+                          child: Text('Voltar'),
                         ),
                       ],                  
                     ),

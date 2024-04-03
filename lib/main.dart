@@ -2,7 +2,9 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 import 'view/ScreenLogin.dart';
+import 'view/ScreenModifyItem.dart';
 import 'view/ScreenSubscribe.dart';
+import 'view/ScreenListTravels.dart';
 
 void main()
 {
@@ -28,12 +30,12 @@ class MainApp extends StatelessWidget {
       //
       //ROTAS DE NAVEGAÇÃO
       //
-      initialRoute: 't1',
+      initialRoute: 'screenLogin',
       routes: {
-        't1' :(context) => ScreenLogin(),
-        't2' :(context) => ScreenSubscribe(),
-        // 't3' :(context) => ScreenLogin(),
-        // 't4' :(context) => ScreenLogin(),
+        'screenLogin' :(context) => ScreenLogin(),
+        'screenSubscribe' :(context) => ScreenSubscribe(),
+        'screenListTravels' :(context) => ScreenListTravels(),
+        'screenModifyItem' :(context) => ScreenModifyItem(),
       }
     );
   }

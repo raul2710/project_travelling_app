@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project_travelling_shop/model/User.dart';
 
 import '../model/Trip.dart';
@@ -22,17 +23,6 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
   // Box separate
   double boxSeparateHeight = 20;
 
-  // FullName input
-  var txtTravelName = TextEditingController();
-  // Email input
-  var txtId = TextEditingController();
-  // Password input
-  var txtPlace = TextEditingController();
-  // Confirm your password input
-  var txtPrice = TextEditingController();
-  // 
-  var txtDescription = TextEditingController();
-
   List<Trip> lista = [];
 
   var _checked = false;
@@ -41,14 +31,38 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
   @override
   Widget build(BuildContext context) {
 
-    final trip = ModalRoute.of(context)!.settings.arguments;
+    Trip trip = ModalRoute.of(context)!.settings.arguments as Trip;
+    
+    // FullName input
+    var txtTravelName = TextEditingController(text: trip.travelName);
+    // Email input
+    var txtId = TextEditingController(text: trip.id.toString());
+    // Password input
+    var txtPlace = TextEditingController(text: trip.place);
+    // Confirm your password input
+    var txtPrice = TextEditingController(text: trip.price.toString());
+    // Description
+    var txtDescription = TextEditingController(text: trip.description);
 
     InputDecoration txtDecorationLoginAndSubscribe(label){
       return InputDecoration(
         filled: true,
-        fillColor: Color.fromARGB(167, 255, 255, 255),
+        fillColor: Color.fromARGB(178, 253, 253, 253),
+        floatingLabelStyle: TextStyle(
+          color: const Color.fromARGB(255, 255, 255, 255),
+          fontSize: 20,
+          // Colocar uma borda nas linhas
+        ),
         labelText: label,
-        border: OutlineInputBorder(
+        labelStyle: MaterialStateTextStyle.resolveWith(
+            (Set<MaterialState> states) {
+              final Color color = states.contains(MaterialState.error)
+                  ? Theme.of(context).colorScheme.error
+                  : Color.fromARGB(255, 255, 255, 255);
+              return TextStyle(color: Color.fromRGBO(0, 0, 0, 0.753), letterSpacing: 1.3,);
+            },
+          ),
+        border: OutlineInputBorder( 
           borderRadius: BorderRadius.all(Radius.circular(shapeBorderTxtField)),
         ),
       );
@@ -180,23 +194,17 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                         return null;
                       }
                     ),
-                    // 
-                    // Button Login
-                    // 
-                    //
-                    // Google and facebook buttons
-                    // 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [                   
                         ElevatedButton(
+                          child: Text(
+                            'Save',
+                          ),
                           onPressed:(){
 
                             if (formKey.currentState!.validate()) {
                               setState(() {
-                                var v1 = txtDescription.text;
-                                var v2 = txtDescription.text;
-
                                 // Captura os dados modificados para salvar ou adicionar na lista
                                 int id = int.parse(txtId.text);
                                 String travelName = txtTravelName.text;
@@ -204,11 +212,15 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                                 double price = double.parse(txtPrice.text);
                                 String description = txtDescription.text;
 
-                                final trip = Trip(id, travelName, place, price, description);
+                                //final trip = Trip(id, travelName, place, price, description);
+                                //trip.description = description;
 
                                 lista.add(trip);
 
-                                Navigator.pushNamed(context, 'screenListTravels');
+                                Navigator.pushNamed(
+                                  context, 
+                                  'screenListTravels',
+                                );
                               });
                 
                             } else {
@@ -216,9 +228,6 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                             }
                             
                           }, /*saveChanges()*/
-                          child: Text(
-                            'Save',
-                          ),
                         ),
                         ElevatedButton(
                           onPressed: () {
@@ -230,6 +239,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                               });
                             } else {
                               // Erro na validação
+
                             }
                           },
                           child: Text(

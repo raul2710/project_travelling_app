@@ -42,7 +42,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
   Widget build(BuildContext context) {
 
     final trip = ModalRoute.of(context)!.settings.arguments;
-
+    
     InputDecoration txtDecorationLoginAndSubscribe(label){
       return InputDecoration(
         filled: true,

@@ -33,6 +33,7 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
         // ListView
         //
         child: ListView.builder(
+          
           //Quantidade de itens
           itemCount: lista.length,
           //Aparência de cada item
@@ -48,7 +49,11 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
                 hoverColor: Colors.red.shade50,
                 //pressionar um item da lista
                 onTap: () {
-                  Navigator.pushNamed(context, 'screenModifyItem');
+                  Navigator.pushNamed(
+                    context, 
+                    'screenModifyItem',
+                    arguments: lista[index],
+                  );
                 },
                 //remover um item da lista
                 onLongPress: () {

@@ -4,7 +4,7 @@ class Trip {
   final String travelName;
   final String place;
   final double price;
-  final String description;
+  late final String description;
 
   Trip(this.id, this.travelName, this.place, this.price, this.description);
 

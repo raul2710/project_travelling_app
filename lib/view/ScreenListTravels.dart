@@ -5,24 +5,28 @@ import '../model/Trip.dart';
 import '../model/User.dart';
 
 class ScreenListTravels extends StatefulWidget {
-  const ScreenListTravels({super.key});
-
+  //final List<User> listUsers;
+  const ScreenListTravels({super.key, /*required this.listUsers*/});
+  
   @override
   State<ScreenListTravels> createState() => _ScreenListTravelsState();
 }
 
 class _ScreenListTravelsState extends State<ScreenListTravels> {
-  //declaração da lista dinâmica de user
-  List<Trip> lista = [];
+  //declaração da listTravels dinâmica de user
+  List<Trip> listTravels = [];
 
   @override
-  void initState() {
-    lista = Trip.loadTravelList();
+  void initState() {  
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    
+    User user = ModalRoute.of(context)!.settings.arguments as User;
+    listTravels = user.listTrips;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Choose your travel'),
@@ -35,7 +39,7 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
         child: ListView.builder(
           
           //Quantidade de itens
-          itemCount: lista.length,
+          itemCount: listTravels.length,
           //Aparência de cada item
           itemBuilder: (context, index) {
             return Card(
@@ -43,22 +47,24 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
               
               child: ListTile(
                 leading: Icon(Icons.person),
-                title: Text(lista[index].travelName),
-                subtitle: Text(lista[index].description),
+                title: Text(listTravels[index].travelName),
+                subtitle: Text(listTravels[index].description),
 
                 hoverColor: Colors.red.shade50,
-                //pressionar um item da lista
+                //pressionar um item da listTravels
                 onTap: () {
-                  Navigator.pushNamed(
-                    context, 
-                    'screenModifyItem',
-                    arguments: lista[index],
-                  );
+                  var teste = [user, listTravels[index]];
+                  // Navigator.byName(name).pushNamed(
+                  //   context, 
+                  //   'screenModifyItem',
+                  //   arguments: listTravels[index],
+                  // );
+                   
                 },
-                //remover um item da lista
+                //remover um item da listTravels
                 onLongPress: () {
                   setState(() {
-                    lista.removeAt(index);
+                    listTravels.removeAt(index);
                   });
                 },
               ),

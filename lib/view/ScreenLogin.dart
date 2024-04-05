@@ -2,9 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:project_travelling_shop/main.dart';
+
+import '../model/User.dart';
+
+
 
 class ScreenLogin extends StatefulWidget {
-  const ScreenLogin({super.key});
+
+  final List<User> listUsers;
+  const ScreenLogin({super.key, required this.listUsers});
 
   @override
   State<ScreenLogin> createState() => _ScreenLoginState();
@@ -27,7 +34,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
 
   @override
   Widget build(BuildContext context) {
-
+    
+    print(listUsers.length);
     InputDecoration txtDecorationLoginAndSubscribe(label){
       return InputDecoration(
         filled: true,
@@ -137,11 +145,14 @@ class _ScreenLoginState extends State<ScreenLogin> {
                               var v1 = txtEmail.text;
                               var v2 = txtPassword.text;
                               
+                              Navigator.pushNamed(
+                                context, 
+                                'screenListTravels', 
+                                arguments: listUsers[2]
+                              );
 
-                              
-                              Navigator.pushNamed(context, 'screenListTravels');
-                              // var msg = 'Tudo certo por enquanto \n email: $v1 \n Senha: $v2';
                             });
+
                           } else {
                             // Erro na validação
                             // senha e usuario errados
@@ -171,7 +182,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, 'screenSubscribe');
+                            Navigator.pushNamed(context, 'screenSubscribe',);
                           },
                           // style: flatButtonStyle,
                           child: Text(

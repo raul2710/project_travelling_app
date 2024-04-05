@@ -54,7 +54,6 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
       );
     }
 
-
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -71,7 +70,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
         child: Padding( 
           padding: const EdgeInsets.fromLTRB(50, 100, 50, 100),
           child: SingleChildScrollView(        
-            child: Center(            
+            child: Center(        
               child: Form(    
                 key: formKey,             
                 child: Column(

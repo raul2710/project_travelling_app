@@ -1,15 +1,21 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
+import 'package:project_travelling_shop/main.dart';
+import 'package:project_travelling_shop/model/Trip.dart';
+
+import '../model/User.dart';
 
 class ScreenSubscribe extends StatefulWidget {
-  const ScreenSubscribe({super.key});
-
+  const ScreenSubscribe({super.key, required this.listUsers});
+  final List<User> listUsers;
+  //print(listUser.toString());
   @override
   State<ScreenSubscribe> createState() => _ScreenSubscribeState();
 }
 class _ScreenSubscribeState extends State<ScreenSubscribe> {
-  
   // Chave para o formulario
   var formKey = GlobalKey<FormState>();
   var status = false;
@@ -34,6 +40,8 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
   @override
   Widget build(BuildContext context) {
     
+    print(listUsers.toString());
+
     InputDecoration txtDecorationLoginAndSubscribe(label){
       return InputDecoration(
         filled: true,
@@ -184,6 +192,7 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                               var v1 = txtEmail.text;
                               var v2 = txtPassword.text;
                               // var msg = 'Tudo certo por enquanto \n email: $v1 \n Senha: $v2';
+                    
                             });
               
                           } else {
@@ -221,7 +230,16 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                         ),
                         OutlinedButton(
                           onPressed: () {Navigator.pushNamed(context, 'screenLogin');}, 
-                          child: Text('Voltar'),
+                          child: Text('Back'),
+                        ),
+                        OutlinedButton(
+                          onPressed: () {
+                            List<Trip> teste = Trip.loadTravelList();
+                            listUsers.add(User("fullName", "email", "password", teste));
+                            
+                            Navigator.pushNamed(context, 'screenLogin');
+                          }, 
+                          child: Text('Save'),
                         ),
                       ],                  
                     ),

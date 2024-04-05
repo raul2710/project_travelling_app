@@ -3,18 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project_travelling_shop/model/User.dart';
+import 'package:project_travelling_shop/view/ScreenLogin.dart';
 
 import '../model/Trip.dart';
 
 class ScreenModifyItem extends StatefulWidget {
-  const ScreenModifyItem({super.key});
-
+  //final Trip trip;
+  const ScreenModifyItem({super.key, /*required this.trip*/});
+  // Declare a field that holds the Todo.
+  
   @override
   State<ScreenModifyItem> createState() => _ScreenModifyItemState();
 }
 class _ScreenModifyItemState extends State<ScreenModifyItem> {
   
-  // Chave para o formulario
   var formKey = GlobalKey<FormState>();
   var status = false;
   
@@ -25,14 +27,14 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
 
   List<Trip> lista = [];
 
-  var _checked = false;
-    // final nome =  ModalRoute.of(context)!.settings.arguments;
-
   @override
   Widget build(BuildContext context) {
-
-    Trip trip = ModalRoute.of(context)!.settings.arguments as Trip;
     
+    //ScreenLogin
+    var teste = ModalRoute.of(context)!.settings.arguments;
+    //Trip trip = ModalRoute.of(context)!.settings.arguments as Trip;
+
+
     // FullName input
     var txtTravelName = TextEditingController(text: trip.travelName);
     // Email input
@@ -213,13 +215,18 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                                 String description = txtDescription.text;
 
                                 //final trip = Trip(id, travelName, place, price, description);
-                                //trip.description = description;
+                                trip.id = id;
+                                trip.travelName = travelName;
+                                trip.place = place;
+                                trip.price = price;
+                                trip.description = description;
 
-                                lista.add(trip);
+                                // listTravels.add(trip);
 
                                 Navigator.pushNamed(
                                   context, 
                                   'screenListTravels',
+                                  arguments: user,
                                 );
                               });
                 
@@ -235,7 +242,13 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                               setState(() {
                                 var v1 = txtDescription.text;
                                 var v2 = txtDescription.text;
-                                Navigator.pushNamed(context, 'screenListTravels');
+                                
+                                Navigator.pushNamed(
+                                  context, 
+                                  'screenListTravels', 
+                                  arguments: user
+                                );
+
                               });
                             } else {
                               // Erro na validação

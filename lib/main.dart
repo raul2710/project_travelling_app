@@ -1,10 +1,13 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
+import 'model/User.dart';
 import 'view/ScreenLogin.dart';
 import 'view/ScreenModifyItem.dart';
 import 'view/ScreenSubscribe.dart';
 import 'view/ScreenListTravels.dart';
+
+List<User> listUsers = User.loadUserList();
 
 void main()
 {
@@ -32,8 +35,8 @@ class MainApp extends StatelessWidget {
       //
       initialRoute: 'screenLogin',
       routes: {
-        'screenLogin' :(context) => ScreenLogin(),
-        'screenSubscribe' :(context) => ScreenSubscribe(),
+        'screenLogin' :(context) => ScreenLogin(listUsers: listUsers,),
+        'screenSubscribe' :(context) => ScreenSubscribe(listUsers: listUsers,),
         'screenListTravels' :(context) => ScreenListTravels(),
         'screenModifyItem' :(context) => ScreenModifyItem(),
       }

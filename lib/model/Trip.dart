@@ -1,13 +1,13 @@
 class Trip {
 
-  final int id;
-  final String travelName;
-  final String place;
-  final double price;
-  late final String description;
+  int id;
+  String travelName;
+  String place;
+  double price;
+  String description;
 
   Trip(this.id, this.travelName, this.place, this.price, this.description);
-
+  
   static List<Trip> loadTravelList() {
     List<Trip> lista = [];
     for (int i = 1; i <= 1; i++) {

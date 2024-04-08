@@ -1,0 +1,28 @@
+
+import 'package:project_travelling_shop/model/Trip.dart';
+
+class CheckBoxTravelWidget extends StatefulWidget {
+  const CheckBoxTravelWidget({ Key key, this.item }) : super(key: key);
+
+  final Trip item;
+
+  @override
+  _CheckBoxTravelWidgetState createState() => _CheckBoxTravelWidgetState();
+}
+
+class _CheckBoxTravelWidgetState extends State<CheckBoxTravelWidget> {
+
+  @override
+  Widget build(BuildContext context) {
+    return CheckboxListTile(
+      title: Text(widget.item.texto),
+      value: widget.item.checked,
+      onChanged: (bool value){
+        setState((){
+          widget.item.checked = value;
+        });
+      },
+    );
+  }
+}
+}

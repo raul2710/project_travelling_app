@@ -1,19 +1,17 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
-import 'package:project_travelling_shop/model/User.dart';
+import 'package:flutter/widgets.dart';
 
 import '../model/Trip.dart';
 
 class ScreenAddTrip extends StatefulWidget {
   const ScreenAddTrip({super.key});
-
+  // Declare a field that holds the Todo.
+  
   @override
   State<ScreenAddTrip> createState() => _ScreenAddTripState();
 }
 class _ScreenAddTripState extends State<ScreenAddTrip> {
   
-  // Chave para o formulario
   var formKey = GlobalKey<FormState>();
   var status = false;
   
@@ -22,37 +20,46 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
   // Box separate
   double boxSeparateHeight = 20;
 
-  // FullName input
-  var txtTravelName = TextEditingController();
-  // Email input
-  var txtId = TextEditingController();
-  // Password input
-  var txtPlace = TextEditingController();
-  // Confirm your password input
-  var txtPrice = TextEditingController();
-  // 
-  var txtDescription = TextEditingController();
-
-  List<Trip> lista = [];
-
-  var _checked = false;
-    // final nome =  ModalRoute.of(context)!.settings.arguments;
-
   @override
   Widget build(BuildContext context) {
-
-    final trip = ModalRoute.of(context)!.settings.arguments;
     
+    List<Trip> listTravels = ModalRoute.of(context)!.settings.arguments as List<Trip>;
+
+    // FullName input
+    var txtTravelName = TextEditingController();
+    // Email input
+    var txtId = TextEditingController();
+    // Password input
+    var txtPlace = TextEditingController();
+    // Confirm your password input
+    var txtPrice = TextEditingController();
+    // Description
+    var txtDescription = TextEditingController();
+
     InputDecoration txtDecorationLoginAndSubscribe(label){
       return InputDecoration(
         filled: true,
-        fillColor: Color.fromARGB(167, 255, 255, 255),
+        fillColor: Color.fromARGB(178, 253, 253, 253),
+        floatingLabelStyle: TextStyle(
+          color: const Color.fromARGB(255, 255, 255, 255),
+          fontSize: 20,
+          // Colocar uma borda nas linhas
+        ),
         labelText: label,
-        border: OutlineInputBorder(
+        labelStyle: MaterialStateTextStyle.resolveWith(
+            (Set<MaterialState> states) {
+              final Color color = states.contains(MaterialState.error)
+                  ? Theme.of(context).colorScheme.error
+                  : Color.fromARGB(255, 255, 255, 255);
+              return TextStyle(color: Color.fromRGBO(0, 0, 0, 0.753), letterSpacing: 1.3,);
+            },
+          ),
+        border: OutlineInputBorder( 
           borderRadius: BorderRadius.all(Radius.circular(shapeBorderTxtField)),
         ),
       );
     }
+
 
     return Scaffold(
       body: Container(
@@ -70,7 +77,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
         child: Padding( 
           padding: const EdgeInsets.fromLTRB(50, 100, 50, 100),
           child: SingleChildScrollView(        
-            child: Center(        
+            child: Center(            
               child: Form(    
                 key: formKey,             
                 child: Column(
@@ -104,10 +111,13 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                       ),
                     ),
                     SizedBox(height: boxSeparateHeight,),
+                    // 
+                    // Input travel name
+                    // 
                     TextFormField(
                       controller: txtTravelName,
                       
-                      decoration: txtDecorationLoginAndSubscribe('Full name'),
+                      decoration: txtDecorationLoginAndSubscribe('Travel title'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Type your full name';
@@ -118,24 +128,27 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                   
                     SizedBox(height: boxSeparateHeight,),
                     // 
-                    // Password content text
+                    // Input id
                     // 
                     TextFormField(
-                      controller: txtDescription,
-                      decoration: txtDecorationLoginAndSubscribe('Email'),
+                      controller: txtId,
+
+                      decoration: txtDecorationLoginAndSubscribe('Id trip'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type an email';
+                          return 'Type an id trip';
                         }
                         return null;
                       }
                     ),
                     SizedBox(height: boxSeparateHeight,),
-
+                    // 
+                    // Input price
+                    // 
                     TextFormField(
-                      controller: txtDescription,
-                      obscureText: true,
-                      decoration: txtDecorationLoginAndSubscribe('Password'),
+                      controller: txtPlace,
+                      
+                      decoration: txtDecorationLoginAndSubscribe('Place'),
                       validator: (value){
                         if (value!.isEmpty) {
                           return 'Type a password';
@@ -145,9 +158,24 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                     ),
                     SizedBox(height: boxSeparateHeight,),
                     TextFormField(
+                      controller: txtPrice,
+                      
+                      decoration: txtDecorationLoginAndSubscribe('Price'),
+                      validator: (value){
+                        if (value!.isEmpty) {
+                          return 'Type your password';
+                        }
+                        return null;
+                      }
+                    ),
+                    SizedBox(height: boxSeparateHeight,),
+                    // 
+                    // Input description
+                    // 
+                    TextFormField(
                       controller: txtDescription,
-                      obscureText: true,
-                      decoration: txtDecorationLoginAndSubscribe('Consfirm your password'),
+                      
+                      decoration: txtDecorationLoginAndSubscribe('Description'),
                       validator: (value){
                         if (value!.isEmpty) {
                           return 'Type your password';
@@ -158,95 +186,55 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                         return null;
                       }
                     ),
-                    // 
-                    // Remember me checkBox
-                    // 
-                    CheckboxListTile(
-                      title: Text('Remember me'),
-                      value: _checked,
-                      onChanged:(bool? value) {
-                        _checked = true;
-                      },
-                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      controlAffinity: ListTileControlAffinity.leading,                  
-                    ),
-                    // 
-                    // Button Login
-                    // 
-                    SizedBox(
-                      width: double.infinity, // <-- match_parent
-                      
-                      child: OutlinedButton(
-                      // style: flatButtonStyle,
-                      
-                        style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                          )  
-                        ),           
-                        onPressed: (){
-                          if (formKey.currentState!.validate()) {
-                            setState(() {
-                              var v1 = txtDescription.text;
-                              var v2 = txtDescription.text;
-                              // var msg = 'Tudo certo por enquanto \n email: $v1 \n Senha: $v2';
-                            });
-              
-                          } else {
-                            // Erro na validação
-                          }
-                        },
-                        child: Text(
-                          'Subscribe',
-                          style: TextStyle(
-                            fontSize: 36,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),               
-                    //
-                    // Google and facebook buttons
-                    // 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [                   
                         ElevatedButton(
-                          onPressed:(){
-                            // Captura os dados modificados para salvar ou adicionar na lista
-                            int id = int.parse(txtId.text);
-                            String travelName = txtTravelName.text;
-                            String place = txtPlace.text;
-                            double price = double.parse(txtPrice.text);
-                            String description = txtDescription.text;
-
-                            final trip = Trip(id, travelName, place, price, description);
-                            
-                            lista.add(trip);
-                          }, /*saveChanges()*/
                           child: Text(
                             'Save',
                           ),
+                          onPressed:(){
+
+                            if (formKey.currentState!.validate()) {
+                              setState(() {
+                                // Captura os dados modificados para salvar ou adicionar na lista
+                                int id = int.parse(txtId.text);
+                                String travelName = txtTravelName.text;
+                                String place = txtPlace.text;
+                                double price = double.parse(txtPrice.text);
+                                String description = txtDescription.text;
+
+                                final Trip tripAdd = Trip(id, travelName, place, price, description, false);
+                                
+                                listTravels.add(tripAdd);
+
+                                Navigator.pop(context);
+                              });
+                
+                            } else {
+                              // Erro na validação
+                            }
+                            
+                          }, /*saveChanges()*/
                         ),
                         ElevatedButton(
-                          onPressed: (){
-                            Navigator.pushNamed(context, 'screenListTravels');
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              setState(() {
+                                var v1 = txtDescription.text;
+                                var v2 = txtDescription.text;
+                                
+                                Navigator.pop(context);
+
+                              });
+                            } else {
+                              // Erro na validação
+
+                            }
                           },
                           child: Text(
                             'Back',
                           ),
-                        ),
-                        IconButton(
-                          onPressed: (){
-                            Navigator.pushNamed(context, 'https://www.facebook.com/?locale=pt_BR');
-                          }, 
-                          icon: Image.asset('lib/images/icons/facebook_logo.png'),
-                          iconSize: 50,
-                        ),
-                        OutlinedButton(
-                          onPressed: () {Navigator.pushNamed(context, 'screenLogin');}, 
-                          child: Text('Voltar'),
                         ),
                       ],                  
                     ),

@@ -229,7 +229,7 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                           iconSize: 50,
                         ),
                         OutlinedButton(
-                          onPressed: () {Navigator.pushNamed(context, 'screenLogin');}, 
+                          onPressed: () {Navigator.pop(context);}, 
                           child: Text('Back'),
                         ),
                         OutlinedButton(
@@ -237,7 +237,7 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                             List<Trip> teste = Trip.loadTravelList();
                             listUsers.add(User("fullName", "email", "password", teste));
                             
-                            Navigator.pushNamed(context, 'screenLogin');
+                            Navigator.pop(context);
                           }, 
                           child: Text('Save'),
                         ),

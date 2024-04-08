@@ -30,10 +30,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
   @override
   Widget build(BuildContext context) {
     
-    //ScreenLogin
-    var teste = ModalRoute.of(context)!.settings.arguments;
-    //Trip trip = ModalRoute.of(context)!.settings.arguments as Trip;
-
+    Trip trip = ModalRoute.of(context)!.settings.arguments as Trip;
 
     // FullName input
     var txtTravelName = TextEditingController(text: trip.travelName);
@@ -223,11 +220,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
 
                                 // listTravels.add(trip);
 
-                                Navigator.pushNamed(
-                                  context, 
-                                  'screenListTravels',
-                                  arguments: user,
-                                );
+                                Navigator.pop(context);
                               });
                 
                             } else {
@@ -243,11 +236,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                                 var v1 = txtDescription.text;
                                 var v2 = txtDescription.text;
                                 
-                                Navigator.pushNamed(
-                                  context, 
-                                  'screenListTravels', 
-                                  arguments: user
-                                );
+                                Navigator.pop(context);
 
                               });
                             } else {

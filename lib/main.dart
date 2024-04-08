@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 import 'model/User.dart';
+import 'view/ScreenAddTrip.dart';
 import 'view/ScreenLogin.dart';
 import 'view/ScreenModifyItem.dart';
 import 'view/ScreenSubscribe.dart';
@@ -39,6 +40,7 @@ class MainApp extends StatelessWidget {
         'screenSubscribe' :(context) => ScreenSubscribe(listUsers: listUsers,),
         'screenListTravels' :(context) => ScreenListTravels(),
         'screenModifyItem' :(context) => ScreenModifyItem(),
+        'screenAddTrip' :(context) => ScreenAddTrip(),
       }
     );
   }

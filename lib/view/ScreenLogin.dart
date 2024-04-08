@@ -1,12 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project_travelling_shop/main.dart';
 
 import '../model/User.dart';
-
-
 
 class ScreenLogin extends StatefulWidget {
 
@@ -35,7 +32,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
   @override
   Widget build(BuildContext context) {
     
-    print(listUsers.length);
     InputDecoration txtDecorationLoginAndSubscribe(label){
       return InputDecoration(
         filled: true,

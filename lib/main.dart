@@ -7,6 +7,7 @@ import 'view/ScreenLogin.dart';
 import 'view/ScreenModifyItem.dart';
 import 'view/ScreenSubscribe.dart';
 import 'view/ScreenListTravels.dart';
+import 'view/ScreenViewTrip.dart';
 
 List<User> listUsers = User.loadUserList();
 
@@ -41,6 +42,7 @@ class MainApp extends StatelessWidget {
         'screenListTravels' :(context) => ScreenListTravels(),
         'screenModifyItem' :(context) => ScreenModifyItem(),
         'screenAddTrip' :(context) => ScreenAddTrip(),
+        'screenViewTrip' :(context) => ScreenViewTrip(),
       }
     );
   }

@@ -14,18 +14,87 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
   //declaração da listTravels dinâmica de user
   List<Trip> listTravels = [];
   bool checkboxValue1 = true;
+  bool isEdit = true;
 
   @override
   void initState() {  
     super.initState();
   }
 
+  ListView ListEdit (bool isEdit, List<Trip> listTravel) {
+    // Modify the list if the user will check or editing
+    if (isEdit){
+      return ListView.builder(
+        //Quantidade de itens
+        itemCount: listTravels.length,
+        //Aparência de cada item
+        itemBuilder: (context, index) {
+          return Card(
+            
+            color: Colors.blue.shade50,
+            child: ListTile (
+                leading: Icon(Icons.card_travel_rounded),
+                title: Text(listTravels[index].travelName),
+                subtitle: Text(listTravels[index].description),
+
+                hoverColor: Colors.red.shade50,
+                //pressionar um item da listTravels
+                onTap: () {
+                  Navigator.pushNamed(
+                    context, 
+                    'screenModifyItem',
+                    arguments: listTravels[index],
+                  );
+                },
+                //remover um item da listTravels
+                onLongPress: () {
+                  setState(() {
+                    listTravels.removeAt(index);
+                  });
+                },
+              ),
+          );
+        }
+      );      
+
+    }else {
+      return ListView.builder(
+        //Quantidade de itens
+        itemCount: listTravels.length,
+        //Aparência de cada item
+        itemBuilder: (context, index) {
+          return Card(
+            
+            color: Colors.blue.shade50,
+            child: CheckboxListTile (
+              
+              secondary: Icon(Icons.card_travel_rounded),
+              title: Text(listTravels[index].travelName),
+              subtitle: Text(listTravels[index].description),
+
+              hoverColor: Colors.red.shade50, 
+              value: listTravels[index].isChecked, 
+              onChanged: (bool? value) { setState(() {
+                  listTravels[index].isChecked = !listTravels[index].isChecked;
+                }); 
+              },
+              //pressionar um item da listTravels
+              
+            ),
+          );
+        } 
+      );  
+    }
+ 
+  }
+
+
   @override
   Widget build(BuildContext context) {
     
     User user = ModalRoute.of(context)!.settings.arguments as User;
     listTravels = user.listTrips;
-   
+    
     return Scaffold(
 
       appBar: AppBar(
@@ -41,12 +110,12 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
           ),
           IconButton(
             icon: Icon(Icons.check),
-            onPressed: (
-              
+            onPressed:  (){
+              setState(() {
+                isEdit = !isEdit;
+              });
+            }, 
 
-            ) {
-              
-            },
           ),   
       ]),
       body: Padding(
@@ -54,55 +123,7 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
         //
         // ListView
         //
-        child: ListView.builder(
-          
-          //Quantidade de itens
-          itemCount: listTravels.length,
-          //Aparência de cada item
-          itemBuilder: (context, index) {
-            return Card(
-              
-              color: Colors.blue.shade50,
-              child: CheckboxListTile (
-                
-                secondary: Icon(Icons.card_travel_rounded),
-                title: Text(listTravels[index].travelName),
-                subtitle: Text(listTravels[index].description),
-
-                hoverColor: Colors.red.shade50, 
-                value: listTravels[index].isChecked, 
-                onChanged: (bool? value) { setState(() {
-                  listTravels[index].isChecked = !listTravels[index].isChecked;
-                }); },
-                //pressionar um item da listTravels
-               
-              ),
-
-              
-              // child: ListTile (
-              //   leading: Icon(Icons.card_travel_rounded),
-              //   title: Text(listTravels[index].travelName),
-              //   subtitle: Text(listTravels[index].description),
-
-              //   hoverColor: Colors.red.shade50,
-              //   //pressionar um item da listTravels
-              //   onTap: () {
-              //     Navigator.pushNamed(
-              //       context, 
-              //       'screenModifyItem',
-              //       arguments: listTravels[index],
-              //     );
-              //   },
-              //   //remover um item da listTravels
-              //   onLongPress: () {
-              //     setState(() {
-              //       listTravels.removeAt(index);
-              //     });
-              //   },
-              // ),
-            );
-          },
-        ),
+        child: ListEdit(isEdit, listTravels),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

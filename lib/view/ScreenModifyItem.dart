@@ -2,14 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:project_travelling_shop/model/User.dart';
-import 'package:project_travelling_shop/view/ScreenLogin.dart';
 
 import '../model/Trip.dart';
 
 class ScreenModifyItem extends StatefulWidget {
   //final Trip trip;
-  const ScreenModifyItem({super.key, /*required this.trip*/});
+  const ScreenModifyItem({super.key});
   // Declare a field that holds the Todo.
   
   @override
@@ -94,15 +92,18 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                     // 
                     // App Name Title
                     // 
+                    // 
+                    // App Name Title
+                    // 
                     Text(
                       'Modify the trip',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 50,
+                        fontSize: 25,
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 50,),
+                    SizedBox(height: 30,),
                     // 
                     // 
                     // 
@@ -127,7 +128,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                       decoration: txtDecorationLoginAndSubscribe('Travel title'),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Type your full name';
+                          return 'Type a name of travel';
                         }
                         return null;
                       },
@@ -143,7 +144,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                       decoration: txtDecorationLoginAndSubscribe('Id trip'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type an id trip';
+                          return 'Type an id of travel';
                         }
                         return null;
                       }
@@ -158,7 +159,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                       decoration: txtDecorationLoginAndSubscribe('Place'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type a password';
+                          return 'Type a place';
                         }
                         return null;
                       }
@@ -170,7 +171,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                       decoration: txtDecorationLoginAndSubscribe('Price'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type your password';
+                          return 'Type a price of travel';
                         }
                         return null;
                       }
@@ -185,16 +186,15 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                       decoration: txtDecorationLoginAndSubscribe('Description'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type your password';
-                        }
-                        else if(value != txtDescription.text){
-                          return 'Type the same password';
+                          return 'Type some description';
                         }
                         return null;
                       }
                     ),
+                    SizedBox(height: boxSeparateHeight,),
+
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [                   
                         ElevatedButton(
                           child: Text(
@@ -231,18 +231,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              setState(() {
-                                var v1 = txtDescription.text;
-                                var v2 = txtDescription.text;
-                                
-                                Navigator.pop(context);
-
-                              });
-                            } else {
-                              // Erro na validação
-
-                            }
+                            Navigator.pop(context);
                           },
                           child: Text(
                             'Back',

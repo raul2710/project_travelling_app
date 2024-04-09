@@ -10,6 +10,8 @@ class ScreenAddTrip extends StatefulWidget {
   @override
   State<ScreenAddTrip> createState() => _ScreenAddTripState();
 }
+
+
 class _ScreenAddTripState extends State<ScreenAddTrip> {
   
   var formKey = GlobalKey<FormState>();
@@ -48,9 +50,6 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
         labelText: label,
         labelStyle: MaterialStateTextStyle.resolveWith(
             (Set<MaterialState> states) {
-              final Color color = states.contains(MaterialState.error)
-                  ? Theme.of(context).colorScheme.error
-                  : Color.fromARGB(255, 255, 255, 255);
               return TextStyle(color: Color.fromRGBO(0, 0, 0, 0.753), letterSpacing: 1.3,);
             },
           ),
@@ -59,7 +58,6 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
         ),
       );
     }
-
 
     return Scaffold(
       body: Container(
@@ -88,14 +86,14 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                     // App Name Title
                     // 
                     Text(
-                      'Modify the trip',
+                      'Add a travel',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 50,
+                        fontSize: 25,
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 50,),
+                    SizedBox(height: 30,),
                     // 
                     // 
                     // 
@@ -120,7 +118,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                       decoration: txtDecorationLoginAndSubscribe('Travel title'),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Type your full name';
+                          return 'Type a name of travel';
                         }
                         return null;
                       },
@@ -136,7 +134,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                       decoration: txtDecorationLoginAndSubscribe('Id trip'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type an id trip';
+                          return 'Type an id of travel';
                         }
                         return null;
                       }
@@ -151,7 +149,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                       decoration: txtDecorationLoginAndSubscribe('Place'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type a password';
+                          return 'Type a place';
                         }
                         return null;
                       }
@@ -163,7 +161,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                       decoration: txtDecorationLoginAndSubscribe('Price'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type your password';
+                          return 'Type a price of travel';
                         }
                         return null;
                       }
@@ -178,16 +176,15 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                       decoration: txtDecorationLoginAndSubscribe('Description'),
                       validator: (value){
                         if (value!.isEmpty) {
-                          return 'Type your password';
-                        }
-                        else if(value != txtDescription.text){
-                          return 'Type the same password';
+                          return 'Type some description';
                         }
                         return null;
                       }
                     ),
+                    SizedBox(height: boxSeparateHeight,),
+
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [                   
                         ElevatedButton(
                           child: Text(
@@ -219,18 +216,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              setState(() {
-                                var v1 = txtDescription.text;
-                                var v2 = txtDescription.text;
-                                
-                                Navigator.pop(context);
-
-                              });
-                            } else {
-                              // Erro na validação
-
-                            }
+                            Navigator.pop(context);
                           },
                           child: Text(
                             'Back',

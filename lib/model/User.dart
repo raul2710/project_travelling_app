@@ -14,11 +14,14 @@ class User {
     List<User> listUser = [];
 
     List<Trip> listTrips = Trip.loadTravelList();
+    List<Trip> listTripsEmpty = [];
 
     listUser.add(User('João da Silva', 'joao@email.com', '123', listTrips));
     listUser.add(User('José Antônio', 'jose@email.com', '123', listTrips));
     listUser.add(User('Ana Maria', 'joao@email.com', '123', listTrips));
     listUser.add(User('Carla Fernanda', 'joao@email.com', 'Teste123', listTrips));
+    listUser.add(User('Carla Fernanda', 'joao@email.com', 'Teste123', listTripsEmpty));
+    listUser.add(User('123', '123', '123', listTripsEmpty));
     
     return listUser;
   }

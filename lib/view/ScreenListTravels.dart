@@ -21,7 +21,7 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
     super.initState();
   }
 
-  ListView ListEdit (bool isEdit, List<Trip> listTravel) {
+  ListView ListEditOrChecked (bool isEdit, List<Trip> listTravel) {
     // Modify the list if the user will check or editing
     if (isEdit){
       return ListView.builder(
@@ -38,6 +38,7 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
                 subtitle: Text(listTravels[index].description),
 
                 hoverColor: Colors.red.shade50,
+
                 //pressionar um item da listTravels
                 onTap: () {
                   Navigator.pushNamed(
@@ -76,6 +77,7 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
               value: listTravels[index].isChecked, 
               onChanged: (bool? value) { setState(() {
                   listTravels[index].isChecked = !listTravels[index].isChecked;
+
                 }); 
               },
               //pressionar um item da listTravels
@@ -98,6 +100,7 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
     return Scaffold(
 
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.grey.shade100,
         title: Text('Your Travels'),
         actions: [
@@ -105,7 +108,11 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
             icon: Icon(Icons.search),
             onPressed: () {
               // Função para adicionar novo item
-
+              Navigator.pushNamed(
+                context, 
+                'screenSearchTrip', 
+                arguments: listTravels,
+              );
             },
           ),
           IconButton(
@@ -123,14 +130,15 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
         //
         // ListView
         //
-        child: ListEdit(isEdit, listTravels),
+        child: ListEditOrChecked(isEdit, listTravels),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(
             context, 
             'screenAddTrip', 
-            arguments: listTravels,);
+            arguments: listTravels,
+          );
         },
         
         child: const Icon(Icons.add),

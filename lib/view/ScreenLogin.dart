@@ -31,7 +31,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
 
   @override
   Widget build(BuildContext context) {
-    
+
     InputDecoration txtDecorationLoginAndSubscribe(label){
       return InputDecoration(
         filled: true,
@@ -114,8 +114,10 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     CheckboxListTile(
                       title: Text('Remember me'),
                       value: _checked,
-                      onChanged:(bool? value) {
-                        _checked = true;
+                      onChanged:(bool? value) {setState(() {
+                        _checked = !_checked;
+                      });
+                        
                       },
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                       controlAffinity: ListTileControlAffinity.leading,                  
@@ -137,17 +139,24 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         ),           
                         onPressed: (){
                           if (formKey.currentState!.validate()) {
-                            setState(() {
-                              var v1 = txtEmail.text;
-                              var v2 = txtPassword.text;
                               
-                              Navigator.pushNamed(
-                                context, 
-                                'screenListTravels', 
-                                arguments: listUsers[2]
-                              );
-
-                            });
+                              if(listUsers.any((u) => u.email == txtEmail.text && u.password == txtPassword.text)){
+                                User user;
+                                user = listUsers.singleWhere((u) => 
+                                  u.email == txtEmail.text && 
+                                  u.password == txtPassword.text
+                                );
+                                
+                                setState(() {
+                                  Navigator.pushNamed(
+                                    context, 
+                                    'screenListTravels', 
+                                    arguments: user,
+                                  );
+                                });
+                              } else {
+                                
+                              }
 
                           } else {
                             // Erro na validação
@@ -178,11 +187,15 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, 'screenSubscribe',);
+                            Navigator.pushNamed(
+                              context, 
+                              'screenSubscribe',
+                              arguments: listUsers,
+                            );
                           },
                           // style: flatButtonStyle,
                           child: Text(
-                            'Inscrever',
+                            'Subscribe',
                             style: TextStyle(
                               color: Colors.white,
                             ),

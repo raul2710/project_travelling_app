@@ -1,16 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:js_interop';
-
 import 'package:flutter/material.dart';
-import 'package:project_travelling_shop/main.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project_travelling_shop/model/Trip.dart';
 
 import '../model/User.dart';
 
 class ScreenSubscribe extends StatefulWidget {
-  const ScreenSubscribe({super.key, required this.listUsers});
-  final List<User> listUsers;
+  const ScreenSubscribe({super.key});
   //print(listUser.toString());
   @override
   State<ScreenSubscribe> createState() => _ScreenSubscribeState();
@@ -18,8 +15,8 @@ class ScreenSubscribe extends StatefulWidget {
 class _ScreenSubscribeState extends State<ScreenSubscribe> {
   // Chave para o formulario
   var formKey = GlobalKey<FormState>();
-  var status = false;
-  
+
+  List<User> listUsers = [];
   // Border button standard
   double shapeBorderTxtField = 6;
   // Box separate
@@ -39,9 +36,9 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
 
   @override
   Widget build(BuildContext context) {
-    
-    print(listUsers.toString());
+    listUsers = ModalRoute.of(context)!.settings.arguments as List<User>;
 
+    double shapeBorderTxtField = 6;
     InputDecoration txtDecorationLoginAndSubscribe(label){
       return InputDecoration(
         filled: true,
@@ -52,7 +49,6 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
         ),
       );
     }
-
 
     return Scaffold(
       body: Container(
@@ -104,6 +100,7 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                       ),
                     ),
                     SizedBox(height: boxSeparateHeight,),
+
                     TextFormField(
                       controller: txtFullName,
                       
@@ -165,8 +162,11 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                       title: Text('Remember me'),
                       value: _checked,
                       onChanged:(bool? value) {
-                        _checked = true;
-                        print(_checked);
+                        setState(() {
+                          _checked = !_checked;
+                          
+                        });
+                       
                       },
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                       controlAffinity: ListTileControlAffinity.leading,                  
@@ -188,13 +188,22 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                         ),           
                         onPressed: (){
                           if (formKey.currentState!.validate()) {
-                            setState(() {
-                              var v1 = txtEmail.text;
-                              var v2 = txtPassword.text;
-                              // var msg = 'Tudo certo por enquanto \n email: $v1 \n Senha: $v2';
-                    
-                            });
-              
+                            if(listUsers.any((u) => u.email == txtEmail.text)){
+                              //erro
+                            } else{
+                              setState(() {
+                                final String fullName = txtFullName.text;
+                                final String email = txtEmail.text;
+                                final String password = txtPassword.text;
+
+                                List<Trip> listTripsEmpty = [];
+
+                                final User user = User(fullName, email, password, listTripsEmpty);
+                                listUsers.add(user);
+                                
+                                Navigator.pop(context);
+                              });
+                            }
                           } else {
                             // Erro na validação
                           }
@@ -211,6 +220,7 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                     //
                     // Google and facebook buttons
                     // 
+                    SizedBox(height: boxSeparateHeight,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [                   
@@ -231,15 +241,9 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                         OutlinedButton(
                           onPressed: () {Navigator.pop(context);}, 
                           child: Text('Back'),
-                        ),
-                        OutlinedButton(
-                          onPressed: () {
-                            List<Trip> teste = Trip.loadTravelList();
-                            listUsers.add(User("fullName", "email", "password", teste));
-                            
-                            Navigator.pop(context);
-                          }, 
-                          child: Text('Save'),
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                          )
                         ),
                       ],                  
                     ),

@@ -5,6 +5,7 @@ import 'model/User.dart';
 import 'view/ScreenAddTrip.dart';
 import 'view/ScreenLogin.dart';
 import 'view/ScreenModifyItem.dart';
+import 'view/ScreenSearchTrip.dart';
 import 'view/ScreenSubscribe.dart';
 import 'view/ScreenListTravels.dart';
 import 'view/ScreenViewTrip.dart';
@@ -37,12 +38,13 @@ class MainApp extends StatelessWidget {
       //
       initialRoute: 'screenLogin',
       routes: {
-        'screenLogin' :(context) => ScreenLogin(listUsers: listUsers,),
-        'screenSubscribe' :(context) => ScreenSubscribe(listUsers: listUsers,),
+        'screenLogin' :(context) => ScreenLogin(listUsers:listUsers),
+        'screenSubscribe' :(context) => ScreenSubscribe(),
         'screenListTravels' :(context) => ScreenListTravels(),
         'screenModifyItem' :(context) => ScreenModifyItem(),
         'screenAddTrip' :(context) => ScreenAddTrip(),
         'screenViewTrip' :(context) => ScreenViewTrip(),
+        'screenSearchTrip' :(context) => ScreenSearchTrip(),
       }
     );
   }

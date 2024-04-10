@@ -34,7 +34,6 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
   List<Trip> lista = [];
 
   void saveChanges(Trip trip){
-
     if (formKey.currentState!.validate()) {
       setState(() {
         // Captura os dados modificados para salvar ou adicionar na lista
@@ -59,7 +58,6 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
     } else {
       // Erro na validação
     }
-    
   }
 
   @override
@@ -118,7 +116,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                      'Trip name',
+                      'Type the modifications',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 20,
@@ -131,40 +129,40 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                     // 
                     TextFormFieldStardard(
                       controller: txtTravelName,
-                      validatorMessage: 'Type some name',
                       labelText: 'Travel name',
+                      validatorMessage: 'Type some name',
                     ),
                     // 
                     // Input id
                     // 
                     TextFormFieldStardard(
                       controller: txtId,
-                      validatorMessage: 'Type some name',
-                      labelText: 'Travel name',
+                      labelText: 'Travel id',
+                      validatorMessage: 'Type some id',
                     ),
                     // 
                     // Input price
                     // 
                     TextFormFieldStardard(
                       controller: txtPlace,
-                      validatorMessage: 'Type some name',
                       labelText: 'Travel name',
+                      validatorMessage: 'Type some name',
                     ),
                     // 
                     // Input price
                     // 
                     TextFormFieldStardard(
                       controller: txtPrice,
-                      validatorMessage: 'Type some name',
-                      labelText: 'Travel name',
+                      labelText: 'Travel price',
+                      validatorMessage: 'Type some price',
                     ),
                     // 
                     // Input description
                     // 
                     TextFormFieldStardard(
                       controller: txtDescription,
-                      validatorMessage: 'Type some name',
-                      labelText: 'Travel name',
+                      labelText: 'Travel description',
+                      validatorMessage: 'Type some description',
                     ),
 
                     Row(

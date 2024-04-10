@@ -20,15 +20,26 @@ class _ScreenLoginState extends State<ScreenLogin> {
   
   // Chave para o formulario
   var formKey = GlobalKey<FormState>();
-  var status = false;
-  
-  var shapeBorderTxtField = 6.0;
-
   // Email text
   var txtEmail = TextEditingController();
   // Password text
   var txtPassword = TextEditingController();
-  var _checked = false;
+  // CheckBox remember me
+  var checked = false;
+
+  Future openDialog() => showDialog(
+    context: context,
+    builder: (context)=>AlertDialog(
+      title: Text('Error'),
+      content: Text('Password wrong or email not found'),
+      actions: [
+        TextButton(
+          onPressed: (){Navigator.of(context).pop();}, 
+          child: Text('Ok')),
+      ],
+    )
+  );
+
 
   void loginLoad(){  
     if (formKey.currentState!.validate()) {
@@ -41,18 +52,16 @@ class _ScreenLoginState extends State<ScreenLogin> {
         setState(() {
           Navigator.pushNamed(
             context, 
-            'screenListTravels', 
-            arguments: user,
+            'screenListCategory', 
+            arguments: user.listTripCategory,
           );
         });
-      }
+      } else openDialog();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -109,9 +118,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     // 
                     CheckboxListTile(
                       title: Text('Remember me'),
-                      value: _checked,
+                      value: checked,
                       onChanged:(bool? value) {setState(() {
-                        _checked = !_checked;
+                        checked = !checked;
                       });
                         
                       },

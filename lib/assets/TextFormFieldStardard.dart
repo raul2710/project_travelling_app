@@ -22,9 +22,9 @@ class TextFormFieldStardard extends StatelessWidget {
     double shapeBorderTxtField = 10;
       return InputDecoration(
         filled: true,
-        fillColor: Color.fromARGB(178, 253, 253, 253),
+        fillColor: Color.fromARGB(234, 199, 199, 199),
         floatingLabelStyle: TextStyle(
-          color: const Color.fromARGB(255, 255, 255, 255),
+          color: Color.fromARGB(185, 145, 145, 145),
           fontSize: 20,
           // Colocar uma borda nas linhas
         ),

@@ -1,42 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:project_travelling_shop/model/Trip.dart';
+import 'package:project_travelling_shop/model/TripCategory.dart';
 
-class ScreenSearchTrip extends StatefulWidget {
-  const ScreenSearchTrip({Key? key}) : super(key: key);
+class ScreenSearchTripCategory extends StatefulWidget {
+  const ScreenSearchTripCategory({Key? key}) : super(key: key);
 
   @override
-  createState() => _ScreenSearchTripState();
+  createState() => _ScreenSearchTripCategoryState();
 }
 
-class _ScreenSearchTripState extends State<ScreenSearchTrip> {
-  // Declaração da listTravels dinâmica de user
+class _ScreenSearchTripCategoryState extends State<ScreenSearchTripCategory> {
+  // Declaração da listTripCategory dinâmica de user
   final TextEditingController txtInputSearch = TextEditingController();
+  final TextEditingController txtCategoryDescription = TextEditingController();
+  final TextEditingController txtCategoryName = TextEditingController();
 
   bool checkboxValue1 = true;
   bool isEdit = true;
   
-  List<Trip> searchResults = [];
-  List<Trip> listTravels = [];
+  List<TripCategory> searchResults = [];
+  List<TripCategory> listTripCategory = [];
+
+  @override
+  void initState() {  
+    super.initState();
+    searchResults = listTripCategory;
+    // txtInputSearch.text = '';
+  }
 
   void onQueryChanged(String query) {
     setState(() {
-      listTravels = ModalRoute.of(context)!.settings.arguments as List<Trip>;
-      searchResults = listTravels
-        .where((item) => item.travelName.toLowerCase().contains(query.toLowerCase()))
+      searchResults = listTripCategory
+        .where((item) => item.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
       }
     );
   }
 
-  @override
-  void initState() {  
-    super.initState();
-  }
-  
+  Future openDialog(TripCategory category)=> showDialog(
+    context: context,
+    builder: (context)=>AlertDialog(
+      title: Text('Add a category'),
+      scrollable: true,
+      content: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Form(child: 
+          
+          Column(children: [
+            TextField(
+              autofocus: true,
+              decoration: InputDecoration(hintText: 'Name of travel'),
+              controller: txtCategoryName,
+          ),
+          TextField(
+              decoration: InputDecoration(hintText: 'Description of travel'),
+              controller: txtCategoryDescription,
+          ),
+        ],),
+
+          ),
+          
+        ),
+      actions: [
+        TextButton(
+          onPressed: (){
+            category.name = txtCategoryName.text;
+            category.description = txtCategoryName.text;
+
+            Navigator.of(context).pop();
+          }, 
+          child: Text('Save')),
+        TextButton(
+          onPressed: (){
+            Navigator.of(context).pop();
+          }, 
+          child: Text('Back')),
+      ],
+    )
+  );
+
+
   @override
   Widget build(BuildContext context) {
-    listTravels = ModalRoute.of(context)!.settings.arguments as List<Trip>;
-
+    listTripCategory = ModalRoute.of(context)!.settings.arguments as List<TripCategory>;
+    
     return Scaffold(
       appBar:AppBar(
         title: Container(
@@ -86,23 +133,21 @@ class _ScreenSearchTripState extends State<ScreenSearchTrip> {
               color: Colors.blue.shade50,
               child: ListTile (
                   leading: Icon(Icons.card_travel_rounded),
-                  title: Text(searchResults[index].travelName),
+                  title: Text(searchResults[index].name),
                   subtitle: Text(searchResults[index].description),
 
                   hoverColor: Colors.red.shade50,
 
                   //pressionar um item da searchResults
                   onTap: () {
-                    Navigator.pushNamed(
-                      context, 
-                      'screenModifyItem',
-                      arguments: searchResults[index],
-                    );
+                    txtCategoryDescription.text = listTripCategory[index].description;
+                    txtCategoryName.text = listTripCategory[index].name;
+                    openDialog(listTripCategory[index]);
                   },
                   //remover um item da searchResults
                   onLongPress: () {
                     setState(() {
-                      listTravels.removeAt(index);
+                      listTripCategory.removeAt(index);
                       onQueryChanged(txtInputSearch.text);
                     });
                   },
@@ -113,14 +158,14 @@ class _ScreenSearchTripState extends State<ScreenSearchTrip> {
         
       ),
 
-        //child: ListEditOrChecked(isEdit, listTravels),
+        //child: ListEditOrChecked(isEdit, listTripCategory),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(
             context, 
             'screenAddTrip', 
-            arguments: listTravels,
+            arguments: listTripCategory,
           );
         },
         

@@ -65,10 +65,8 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
         //Aparência de cada item
         itemBuilder: (context, index) {
           return Card(
-            
             color: Colors.blue.shade50,
             child: CheckboxListTile (
-              
               secondary: Icon(Icons.card_travel_rounded),
               title: Text(listTravels[index].travelName),
               subtitle: Text(listTravels[index].description),
@@ -89,18 +87,13 @@ class _ScreenListTravelsState extends State<ScreenListTravels> {
     }
  
   }
-
-
   @override
   Widget build(BuildContext context) {
     
-    User user = ModalRoute.of(context)!.settings.arguments as User;
-    listTravels = user.listTrips;
-    
+    listTravels = ModalRoute.of(context)!.settings.arguments as List<Trip>;
+  
     return Scaffold(
-
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: Colors.grey.shade100,
         title: Text('Your Travels'),
         actions: [

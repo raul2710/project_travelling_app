@@ -3,7 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project_travelling_shop/model/Trip.dart';
+import 'package:project_travelling_shop/model/TripCategory.dart';
 
+import '../assets/ButtonStandard.dart';
+import '../assets/TextFormFieldStardard.dart';
 import '../model/User.dart';
 
 class ScreenSubscribe extends StatefulWidget {
@@ -17,10 +20,6 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
   var formKey = GlobalKey<FormState>();
 
   List<User> listUsers = [];
-  // Border button standard
-  double shapeBorderTxtField = 6;
-  // Box separate
-  double boxSeparateHeight = 20;
 
   // FullName input
   var txtFullName = TextEditingController();
@@ -31,24 +30,58 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
   // Confirm your password input
   var txtConfirmPassword = TextEditingController();
 
-  var _checked = false;
-    // final nome =  ModalRoute.of(context)!.settings.arguments;
+  Future openDialog(String error) => showDialog(
+    context: context,
+    builder: (context)=>AlertDialog(
+      title: Text('Error'),
+      content: Text(error),
+      actions: [
+        TextButton(
+          onPressed: (){Navigator.of(context).pop();}, 
+          child: Text('Ok')),
+      ],
+    )
+  );
+
+  void saveUser(){
+    if (formKey.currentState!.validate()) {
+      if(listUsers.any((u) => u.email == txtEmail.text)){
+        // Error email already subscribed
+        openDialog('Email already subscribe');
+      } else if(txtPassword.text != txtConfirmPassword.text){
+        // Password different
+        openDialog('Different password typed');
+      } else{
+        setState(() {
+          final String fullName = txtFullName.text;
+          final String email = txtEmail.text;
+          final String password = txtPassword.text;
+
+          List<TripCategory> listTripsEmpty = [];
+
+          final User user = User(fullName, email, password, listTripsEmpty);
+          listUsers.add(user);
+          
+          Navigator.pop(context);
+        });
+      }
+    }
+  }
+
+  // validator: (value){
+  //                       if (value!.isEmpty) {
+  //                         return 'Type your password';
+  //                       }
+  //                       else if(value != txtPassword.text){
+  //                         return 'Type the same password';
+  //                       }
+  //                       return null;
+  //                     }
 
   @override
   Widget build(BuildContext context) {
-    listUsers = ModalRoute.of(context)!.settings.arguments as List<User>;
 
-    double shapeBorderTxtField = 6;
-    InputDecoration txtDecorationLoginAndSubscribe(label){
-      return InputDecoration(
-        filled: true,
-        fillColor: Color.fromARGB(167, 255, 255, 255),
-        labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(shapeBorderTxtField)),
-        ),
-      );
-    }
+    listUsers = ModalRoute.of(context)!.settings.arguments as List<User>;
 
     return Scaffold(
       body: Container(
@@ -86,7 +119,7 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                     ),
                     SizedBox(height: 50,),
                     // 
-                    // Email content text
+                    // Subtitle
                     // 
                     Container(
                       alignment: Alignment.centerLeft,
@@ -99,128 +132,51 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                         ),
                       ),
                     ),
-                    SizedBox(height: boxSeparateHeight,),
-
-                    TextFormField(
+                    // 
+                    // Full name content input
+                    // 
+                    TextFormFieldStardard(
                       controller: txtFullName,
-                      
-                      decoration: txtDecorationLoginAndSubscribe('Full name'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Type your full name';
-                        }
-                        return null;
-                      },
+                      labelText: 'Fullname',
+                      validatorMessage: 'Type your fullname',
                     ),
-                  
-                    SizedBox(height: boxSeparateHeight,),
                     // 
-                    // Password content text
+                    // Email content input
                     // 
-                    TextFormField(
+                    TextFormFieldStardard(
                       controller: txtEmail,
-                      decoration: txtDecorationLoginAndSubscribe('Email'),
-                      validator: (value){
-                        if (value!.isEmpty) {
-                          return 'Type an email';
-                        }
-                        return null;
-                      }
+                      labelText: 'Email',
+                      validatorMessage: 'Type your email',
                     ),
-                    SizedBox(height: boxSeparateHeight,),
-
-                    TextFormField(
+                    // 
+                    // Password content input
+                    // 
+                    TextFormFieldStardard(
                       controller: txtPassword,
                       obscureText: true,
-                      decoration: txtDecorationLoginAndSubscribe('Password'),
-                      validator: (value){
-                        if (value!.isEmpty) {
-                          return 'Type a password';
-                        }
-                        return null;
-                      }
+                      labelText: 'Password',
+                      validatorMessage: 'Type your password',
                     ),
-                    SizedBox(height: boxSeparateHeight,),
-                    TextFormField(
+                    // 
+                    // Password confirm content input
+                    //
+                    TextFormFieldStardard(
                       controller: txtConfirmPassword,
                       obscureText: true,
-                      decoration: txtDecorationLoginAndSubscribe('Consfirm your password'),
-                      validator: (value){
-                        if (value!.isEmpty) {
-                          return 'Type your password';
-                        }
-                        else if(value != txtPassword.text){
-                          return 'Type the same password';
-                        }
-                        return null;
-                      }
+                      labelText: 'Confirm your password',
+                      validatorMessage: 'Type the same password',
                     ),
+                    SizedBox(height: 10,),
                     // 
-                    // Remember me checkBox
+                    // Button subscribe
                     // 
-                    CheckboxListTile(
-                      title: Text('Remember me'),
-                      value: _checked,
-                      onChanged:(bool? value) {
-                        setState(() {
-                          _checked = !_checked;
-                          
-                        });
-                       
-                      },
-                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      controlAffinity: ListTileControlAffinity.leading,                  
-                    ),
-                    // 
-                    // Button Login
-                    // 
-                    SizedBox(
-                      width: double.infinity, // <-- match_parent
-                      
-                      child: OutlinedButton(
-                      // style: flatButtonStyle,
-                      
-                        style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                          )  
-                        ),           
-                        onPressed: (){
-                          if (formKey.currentState!.validate()) {
-                            if(listUsers.any((u) => u.email == txtEmail.text)){
-                              //erro
-                            } else{
-                              setState(() {
-                                final String fullName = txtFullName.text;
-                                final String email = txtEmail.text;
-                                final String password = txtPassword.text;
-
-                                List<Trip> listTripsEmpty = [];
-
-                                final User user = User(fullName, email, password, listTripsEmpty);
-                                listUsers.add(user);
-                                
-                                Navigator.pop(context);
-                              });
-                            }
-                          } else {
-                            // Erro na validação
-                          }
-                        },
-                        child: Text(
-                          'Subscribe',
-                          style: TextStyle(
-                            fontSize: 36,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),               
+                    ButtonStandard(
+                      text:'Subscribe',
+                      onPressed: saveUser,
+                    ), 
                     //
                     // Google and facebook buttons
                     // 
-                    SizedBox(height: boxSeparateHeight,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [                   

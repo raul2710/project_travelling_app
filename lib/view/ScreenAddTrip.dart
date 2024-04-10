@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../assets/TextFormFieldStardard.dart';
 import '../model/Trip.dart';
 
 class ScreenAddTrip extends StatefulWidget {
@@ -38,26 +39,35 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
     // Description
     var txtDescription = TextEditingController();
 
-    InputDecoration txtDecorationLoginAndSubscribe(label){
-      return InputDecoration(
-        filled: true,
-        fillColor: Color.fromARGB(178, 253, 253, 253),
-        floatingLabelStyle: TextStyle(
-          color: const Color.fromARGB(255, 255, 255, 255),
-          fontSize: 20,
-          // Colocar uma borda nas linhas
-        ),
-        labelText: label,
-        labelStyle: MaterialStateTextStyle.resolveWith(
-            (Set<MaterialState> states) {
-              return TextStyle(color: Color.fromRGBO(0, 0, 0, 0.753), letterSpacing: 1.3,);
-            },
-          ),
-        border: OutlineInputBorder( 
-          borderRadius: BorderRadius.all(Radius.circular(shapeBorderTxtField)),
-        ),
-      );
+    void addTravel(){
+      if (formKey.currentState!.validate()) {
+        setState(() {
+          // Captura os dados modificados para salvar ou adicionar na lista
+          int id = int.parse(txtId.text);
+          String travelName = txtTravelName.text;
+          String place = txtPlace.text;
+          double price = double.parse(txtPrice.text);
+          String description = txtDescription.text;
+
+          final Trip tripAdd = Trip(id, travelName, place, price, description, false);
+          
+          listTravels.add(tripAdd);
+
+          Navigator.pop(context);
+        });
+      }
     }
+
+    // Validador se as senhas são iguais
+    // validator: (value){
+    //                     if (value!.isEmpty) {
+    //                       return 'Type your password';
+    //                     }
+    //                     else if(value != txtPassword.text){
+    //                       return 'Type the same password';
+    //                     }
+    //                     return null;
+    //                   }
 
     return Scaffold(
       body: Container(
@@ -95,7 +105,7 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                     ),
                     SizedBox(height: 30,),
                     // 
-                    // 
+                    // Subtitile
                     // 
                     Container(
                       alignment: Alignment.centerLeft,
@@ -108,81 +118,46 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                         ),
                       ),
                     ),
-                    SizedBox(height: boxSeparateHeight,),
                     // 
                     // Input travel name
                     // 
-                    TextFormField(
+                    TextFormFieldStardard(
                       controller: txtTravelName,
-                      
-                      decoration: txtDecorationLoginAndSubscribe('Travel title'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Type a name of travel';
-                        }
-                        return null;
-                      },
+                      labelText: 'Travel name',
+                      validatorMessage: 'Type some name',
                     ),
-                  
-                    SizedBox(height: boxSeparateHeight,),
                     // 
                     // Input id
                     // 
-                    TextFormField(
+                    TextFormFieldStardard(
                       controller: txtId,
-
-                      decoration: txtDecorationLoginAndSubscribe('Id trip'),
-                      validator: (value){
-                        if (value!.isEmpty) {
-                          return 'Type an id of travel';
-                        }
-                        return null;
-                      }
+                      labelText: 'Travel id',
+                      validatorMessage: 'Type some id',
                     ),
-                    SizedBox(height: boxSeparateHeight,),
                     // 
                     // Input price
                     // 
-                    TextFormField(
+                    TextFormFieldStardard(
                       controller: txtPlace,
-                      
-                      decoration: txtDecorationLoginAndSubscribe('Place'),
-                      validator: (value){
-                        if (value!.isEmpty) {
-                          return 'Type a place';
-                        }
-                        return null;
-                      }
+                      labelText: 'Travel name',
+                      validatorMessage: 'Type some name',
                     ),
-                    SizedBox(height: boxSeparateHeight,),
-                    TextFormField(
+                    // 
+                    // Input price
+                    // 
+                    TextFormFieldStardard(
                       controller: txtPrice,
-                      
-                      decoration: txtDecorationLoginAndSubscribe('Price'),
-                      validator: (value){
-                        if (value!.isEmpty) {
-                          return 'Type a price of travel';
-                        }
-                        return null;
-                      }
+                      labelText: 'Travel price',
+                      validatorMessage: 'Type some price',
                     ),
-                    SizedBox(height: boxSeparateHeight,),
                     // 
                     // Input description
                     // 
-                    TextFormField(
+                    TextFormFieldStardard(
                       controller: txtDescription,
-                      
-                      decoration: txtDecorationLoginAndSubscribe('Description'),
-                      validator: (value){
-                        if (value!.isEmpty) {
-                          return 'Type some description';
-                        }
-                        return null;
-                      }
+                      labelText: 'Travel description',
+                      validatorMessage: 'Type some description',
                     ),
-                    SizedBox(height: boxSeparateHeight,),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [                   
@@ -191,28 +166,8 @@ class _ScreenAddTripState extends State<ScreenAddTrip> {
                             'Save',
                           ),
                           onPressed:(){
-
-                            if (formKey.currentState!.validate()) {
-                              setState(() {
-                                // Captura os dados modificados para salvar ou adicionar na lista
-                                int id = int.parse(txtId.text);
-                                String travelName = txtTravelName.text;
-                                String place = txtPlace.text;
-                                double price = double.parse(txtPrice.text);
-                                String description = txtDescription.text;
-
-                                final Trip tripAdd = Trip(id, travelName, place, price, description, false);
-                                
-                                listTravels.add(tripAdd);
-
-                                Navigator.pop(context);
-                              });
-                
-                            } else {
-                              // Erro na validação
-                            }
-                            
-                          }, /*saveChanges()*/
+                            addTravel();
+                          },
                         ),
                         ElevatedButton(
                           onPressed: () {

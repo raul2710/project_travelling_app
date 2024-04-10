@@ -14,11 +14,6 @@ class _ScreenViewTripState extends State<ScreenViewTrip> {
   
   var formKey = GlobalKey<FormState>();
   var status = false;
-  
-  // Border button standard
-  double shapeBorderTxtField = 6;
-  // Box separate
-  double boxSeparateHeight = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -35,30 +30,6 @@ class _ScreenViewTripState extends State<ScreenViewTrip> {
     var txtPrice = TextEditingController();
     // Description
     var txtDescription = TextEditingController();
-
-    InputDecoration txtDecorationLoginAndSubscribe(label){
-      return InputDecoration(
-        filled: true,
-        fillColor: Color.fromARGB(178, 253, 253, 253),
-        floatingLabelStyle: TextStyle(
-          color: const Color.fromARGB(255, 255, 255, 255),
-          fontSize: 20,
-          // Colocar uma borda nas linhas
-        ),
-        labelText: label,
-        labelStyle: MaterialStateTextStyle.resolveWith(
-            (Set<MaterialState> states) {
-              final Color color = states.contains(MaterialState.error)
-                  ? Theme.of(context).colorScheme.error
-                  : Color.fromARGB(255, 255, 255, 255);
-              return TextStyle(color: Color.fromRGBO(0, 0, 0, 0.753), letterSpacing: 1.3,);
-            },
-          ),
-        border: OutlineInputBorder( 
-          borderRadius: BorderRadius.all(Radius.circular(shapeBorderTxtField)),
-        ),
-      );
-    }
 
     return Scaffold(
       body: Container(
@@ -109,14 +80,12 @@ class _ScreenViewTripState extends State<ScreenViewTrip> {
                         ),
                       ),
                     ),
-                    SizedBox(height: boxSeparateHeight,),
                     // 
                     // Input travel name
                     // 
                     TextFormField(
                       controller: txtTravelName,
                       
-                      decoration: txtDecorationLoginAndSubscribe('Travel title'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Type your full name';
@@ -125,14 +94,12 @@ class _ScreenViewTripState extends State<ScreenViewTrip> {
                       },
                     ),
                   
-                    SizedBox(height: boxSeparateHeight,),
                     // 
                     // Input id
                     // 
                     TextFormField(
                       controller: txtId,
 
-                      decoration: txtDecorationLoginAndSubscribe('Id trip'),
                       validator: (value){
                         if (value!.isEmpty) {
                           return 'Type an id trip';
@@ -140,14 +107,12 @@ class _ScreenViewTripState extends State<ScreenViewTrip> {
                         return null;
                       }
                     ),
-                    SizedBox(height: boxSeparateHeight,),
                     // 
                     // Input price
                     // 
                     TextFormField(
                       controller: txtPlace,
                       
-                      decoration: txtDecorationLoginAndSubscribe('Place'),
                       validator: (value){
                         if (value!.isEmpty) {
                           return 'Type a password';
@@ -155,11 +120,9 @@ class _ScreenViewTripState extends State<ScreenViewTrip> {
                         return null;
                       }
                     ),
-                    SizedBox(height: boxSeparateHeight,),
                     TextFormField(
                       controller: txtPrice,
                       
-                      decoration: txtDecorationLoginAndSubscribe('Price'),
                       validator: (value){
                         if (value!.isEmpty) {
                           return 'Type your password';
@@ -167,14 +130,12 @@ class _ScreenViewTripState extends State<ScreenViewTrip> {
                         return null;
                       }
                     ),
-                    SizedBox(height: boxSeparateHeight,),
                     // 
                     // Input description
                     // 
                     TextFormField(
                       controller: txtDescription,
                       
-                      decoration: txtDecorationLoginAndSubscribe('Description'),
                       validator: (value){
                         if (value!.isEmpty) {
                           return 'Type your password';
@@ -220,16 +181,9 @@ class _ScreenViewTripState extends State<ScreenViewTrip> {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               setState(() {
-                                var v1 = txtDescription.text;
-                                var v2 = txtDescription.text;
-                                
                                 Navigator.pop(context);
-
                               });
-                            } else {
-                              // Erro na validação
-
-                            }
+                            } 
                           },
                           child: Text(
                             'Back',

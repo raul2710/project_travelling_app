@@ -111,7 +111,7 @@ class _ScreenListCategoryState extends State<ScreenListCategory> {
         title: Text('Your Travels'),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.edit_note),
             onPressed: () {
               // Função para adicionar novo item
               Navigator.pushNamed(

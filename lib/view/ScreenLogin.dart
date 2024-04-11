@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project_travelling_shop/assets/TextFormFieldStardard.dart';
@@ -39,7 +40,28 @@ class _ScreenLoginState extends State<ScreenLogin> {
       ],
     )
   );
+  Future openDialogEmail() => showDialog(
+    context: context,
+    builder: (context)=>AlertDialog(
+      title: Text('Error'),
+      content: Text('Not a valid email '),
+      actions: [
+        TextButton(
+          onPressed: (){Navigator.of(context).pop();}, 
+          child: Text('Ok')),
+      ],
+    )
+  );
 
+  void validateEmail(){
+    final bool isValidate = EmailValidator.validate(txtEmail.text.trim());
+
+    if(isValidate){
+      loginLoad();
+    }else{
+      openDialogEmail();
+    }
+  }
 
   void loginLoad(){  
     if (formKey.currentState!.validate()) {
@@ -85,17 +107,19 @@ class _ScreenLoginState extends State<ScreenLogin> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   
                   children: [
+                    Image.asset('lib/images/logoApp.png'),
                     // 
                     // App Name Title
                     // 
-                    Text(
-                      'Travelling',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 50,
-                        color: Colors.white,
-                      ),
-                    ),
+                    // Text(
+                    //   'Travelling',
+                    //   textAlign: TextAlign.center,
+                    //   style: TextStyle(
+                    //     fontSize: 50,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
+                    SizedBox(height: 20,),
                     // 
                     // Email content input
                     // 
@@ -132,7 +156,10 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     // 
                     ButtonStandard(
                       text:'Login',
-                      onPressed: loginLoad,
+                      onPressed: (){
+                        formKey.currentState!.validate();
+                        validateEmail();
+                      }
                     ),            
                     // 
                     // Reset password and subscribe

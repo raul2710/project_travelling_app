@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:project_travelling_shop/model/Trip.dart';
 import 'package:project_travelling_shop/model/TripCategory.dart';
 
 import '../assets/ButtonStandard.dart';
@@ -43,6 +43,16 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
     )
   );
 
+  void validateEmail(){
+    final bool isValidate = EmailValidator.validate(txtEmail.text.trim());
+
+    if(isValidate){
+      saveUser();
+    }else{
+      openDialog('Invalid email');
+    }
+  }
+
   void saveUser(){
     if (formKey.currentState!.validate()) {
       if(listUsers.any((u) => u.email == txtEmail.text)){
@@ -67,16 +77,6 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
       }
     }
   }
-
-  // validator: (value){
-  //                       if (value!.isEmpty) {
-  //                         return 'Type your password';
-  //                       }
-  //                       else if(value != txtPassword.text){
-  //                         return 'Type the same password';
-  //                       }
-  //                       return null;
-  //                     }
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +172,10 @@ class _ScreenSubscribeState extends State<ScreenSubscribe> {
                     // 
                     ButtonStandard(
                       text:'Subscribe',
-                      onPressed: saveUser,
+                      onPressed: (){
+                        formKey.currentState!.validate();
+                        validateEmail();
+                      },
                     ), 
                     //
                     // Google and facebook buttons

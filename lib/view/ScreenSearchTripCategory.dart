@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_travelling_shop/model/Trip.dart';
 import 'package:project_travelling_shop/model/TripCategory.dart';
+
+import '../model/Trip.dart';
 
 class ScreenSearchTripCategory extends StatefulWidget {
   const ScreenSearchTripCategory({Key? key}) : super(key: key);
@@ -37,7 +38,51 @@ class _ScreenSearchTripCategoryState extends State<ScreenSearchTripCategory> {
     );
   }
 
-  Future openDialog(TripCategory category)=> showDialog(
+  Future openDialogSave(List<TripCategory> categories)=> showDialog(
+    context: context,
+    builder: (context)=>AlertDialog(
+      title: Text('Add a category'),
+      scrollable: true,
+      content: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Form(child: 
+          
+          Column(children: [
+            TextField(
+              autofocus: true,
+              decoration: InputDecoration(hintText: 'Name of travel'),
+              controller: txtCategoryName,
+          ),
+          TextField(
+              decoration: InputDecoration(hintText: 'Description of travel'),
+              controller: txtCategoryDescription,
+          ),
+        ],),
+
+          ),
+          
+        ),
+      actions: [
+        TextButton(
+          onPressed: (){
+            setState((){List<Trip> listTravels = [];
+            TripCategory tripCategory = TripCategory(txtCategoryName.text, txtCategoryDescription.text, listTravels);
+
+            listTripCategory.add(tripCategory);
+            
+            Navigator.of(context).pop();});
+          }, 
+          child: Text('Save')),
+        TextButton(
+          onPressed: (){
+            Navigator.of(context).pop();
+          }, 
+          child: Text('Back')),
+      ],
+    )
+  );
+
+  Future openDialogEdit(TripCategory category)=> showDialog(
     context: context,
     builder: (context)=>AlertDialog(
       title: Text('Add a category'),
@@ -65,7 +110,7 @@ class _ScreenSearchTripCategoryState extends State<ScreenSearchTripCategory> {
         TextButton(
           onPressed: (){
             category.name = txtCategoryName.text;
-            category.description = txtCategoryName.text;
+            category.description = txtCategoryDescription.text;
 
             Navigator.of(context).pop();
           }, 
@@ -83,6 +128,7 @@ class _ScreenSearchTripCategoryState extends State<ScreenSearchTripCategory> {
   @override
   Widget build(BuildContext context) {
     listTripCategory = ModalRoute.of(context)!.settings.arguments as List<TripCategory>;
+    onQueryChanged(txtInputSearch.text);
     
     return Scaffold(
       appBar:AppBar(
@@ -142,7 +188,7 @@ class _ScreenSearchTripCategoryState extends State<ScreenSearchTripCategory> {
                   onTap: () {
                     txtCategoryDescription.text = listTripCategory[index].description;
                     txtCategoryName.text = listTripCategory[index].name;
-                    openDialog(listTripCategory[index]);
+                    openDialogEdit(listTripCategory[index]);
                   },
                   //remover um item da searchResults
                   onLongPress: () {
@@ -162,11 +208,9 @@ class _ScreenSearchTripCategoryState extends State<ScreenSearchTripCategory> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(
-            context, 
-            'screenAddTrip', 
-            arguments: listTripCategory,
-          );
+          txtCategoryDescription.text = '';
+          txtCategoryName.text = '';
+          openDialogSave(listTripCategory);
         },
         
         child: const Icon(Icons.add),

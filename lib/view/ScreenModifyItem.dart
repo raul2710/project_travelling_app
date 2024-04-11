@@ -43,21 +43,15 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
         double price = double.parse(txtPrice.text);
         String description = txtDescription.text;
 
-        //final trip = Trip(id, travelName, place, price, description);
         trip.id = id;
         trip.travelName = travelName;
         trip.place = place;
         trip.price = price;
         trip.description = description;
 
-        // listTravels.add(trip);
-
         Navigator.pop(context);
       });
-
-    } else {
-      // Erro na validação
-    }
+    } 
   }
 
   @override
@@ -96,7 +90,6 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                 key: formKey,             
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  
                   children: [
                     // 
                     // App Name Title
@@ -111,7 +104,7 @@ class _ScreenModifyItemState extends State<ScreenModifyItem> {
                     ),
                     SizedBox(height: 30,),
                     // 
-                    // 
+                    // Subtitle
                     // 
                     Container(
                       alignment: Alignment.centerLeft,

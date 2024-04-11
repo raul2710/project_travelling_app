@@ -36,7 +36,8 @@ class _ScreenSearchTripState extends State<ScreenSearchTrip> {
   @override
   Widget build(BuildContext context) {
     listTravels = ModalRoute.of(context)!.settings.arguments as List<Trip>;
-
+    onQueryChanged(txtInputSearch.text);
+    
     return Scaffold(
       appBar:AppBar(
         title: Container(

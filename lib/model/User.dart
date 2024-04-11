@@ -17,12 +17,12 @@ class User {
     List<TripCategory> listTripCategoryNotEmpty = TripCategory.loadTripCategoryList();
     List<TripCategory> listTripCategoryEmpty = [];
 
-    listUser.add(User('João da Silva', '123@email.com', '123', listTripCategoryNotEmpty));
-    listUser.add(User('José Antônio', 'teste@email.com', '123', listTripCategoryNotEmpty));
-    listUser.add(User('Ana Maria', 'joaquim@email.com', '123', listTripCategoryNotEmpty));
-    listUser.add(User('Carla Fernanda', 'regis@email.com', 'Teste123', listTripCategoryNotEmpty));
-    listUser.add(User('Carla Fernanda', '234', '234', listTripCategoryEmpty));
-    listUser.add(User('123', '123', '123', listTripCategoryNotEmpty));
+    listUser.add(User('João da Silva', '123@gmail.com', '123', listTripCategoryNotEmpty));
+    listUser.add(User('José Antônio', 'teste@gmail.com', '123', listTripCategoryNotEmpty));
+    listUser.add(User('Ana Maria', 'joaquim@gmail.com', '123', listTripCategoryNotEmpty));
+    listUser.add(User('Carla Fernanda', 'regis@gmail.com', 'Teste123', listTripCategoryNotEmpty));
+    listUser.add(User('Carla Fernanda', '234@outlook.com', '234', listTripCategoryEmpty));
+    listUser.add(User('123', '123@outlook.com', '123', listTripCategoryNotEmpty));
     
     return listUser;
   }

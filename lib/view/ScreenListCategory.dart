@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -41,10 +42,8 @@ class _ScreenListCategoryState extends State<ScreenListCategory> {
               controller: txtCategoryDescription,
           ),
         ],),
-
-          ),
-          
         ),
+      ),
       actions: [
         TextButton(
           onPressed: (){
@@ -78,7 +77,7 @@ class _ScreenListCategoryState extends State<ScreenListCategory> {
                 leading: Icon(Icons.card_travel_rounded),
                 title: Text(txtCategoryName[index].name),
                 subtitle: Text(txtCategoryName[index].description),
-
+                
                 hoverColor: Colors.red.shade50,
 
                 //pressionar um item da txtCategoryName
@@ -107,7 +106,7 @@ class _ScreenListCategoryState extends State<ScreenListCategory> {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         backgroundColor: Colors.grey.shade100,
         title: Text('Your Travels'),
         actions: [
@@ -132,10 +131,39 @@ class _ScreenListCategoryState extends State<ScreenListCategory> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          txtCategoryDescription.text = '';
+          txtCategoryName.text = '';
           openDialog();
         },
         
         child: const Icon(Icons.add),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 29, 165, 33),
+              ),
+              child: Text(
+                  'Travelling App',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+            ),
+            ListTile(
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pushNamed(context, 'screenAbout');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

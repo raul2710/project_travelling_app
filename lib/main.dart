@@ -10,7 +10,7 @@ import 'view/ScreenModifyItem.dart';
 import 'view/ScreenSearchTrip.dart';
 import 'view/ScreenSearchTripCategory.dart';
 import 'view/ScreenSubscribe.dart';
-import 'view/ScreenListTravels.dart';
+import 'view/ScreenListTrip.dart';
 import 'view/ScreenViewTrip.dart';
 
 List<User> listUsers = User.loadUserList();
@@ -50,7 +50,7 @@ class MainApp extends StatelessWidget {
         'screenSearchTrip' :(context) => ScreenSearchTrip(),
         'screenListCategory' :(context) => ScreenListCategory(),
         'screenSearchTripCategory' :(context) => ScreenSearchTripCategory(),
-        // 'screenAbout' :(context) => ScreenAbout(),
+        'screenAbout' :(context) => ScreenAbout(),
       }
     );
   }
